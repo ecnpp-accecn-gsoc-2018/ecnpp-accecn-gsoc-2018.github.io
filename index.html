@@ -35,7 +35,7 @@
       <br>
       <h4 class="header center black-text">Implementation of AccECN and ECN++ in ns-3</h4>
       <div class="row center">
-        <h6 class="header col s12 light"><font color="vintage">Student:</font> Wenying Dai<br><br> <font color="vintage">Mentor:</font> Mohit P. Tahiliani<br><br> <font color="vintage">Organization:</font> The ns-3 Network Simulator Project</h6>
+        <h6 class="header col s12 light"><font color="vintage">Student:</font> Wenying Dai, Tsinghua University, China<br><br> <font color="vintage">Mentor:</font> Mohit P. Tahiliani, NITK Surathkal, India<br><br> <font color="vintage">Organization:</font> The ns-3 Network Simulator Project</h6>
       </div> 
       <h5><font color="vintage">Project Overview</font></h5>
       <p style="text-align:justify">Reducing Internet Transport Latency is an interesting research topic and has gained significant attention in the recent past. Some of the promising new solutions rely on Explicit Congestion Notification (ECN) (RFC 3168) to notify TCP endpoints of congestion that may be developing in a bottleneck queue, without resorting to packet drops. As a result, there have been attempts at Internet Engineering Task Force (IETF) to extend the functionality of ECN and provide rich feedback to TCP endpoints. In this regard, Accurate ECN feedback (AccECN) and ECN++ are two active topics of discussion at IETF. During GSoC 2018, I extended the ECN implementation in ns-3 to support ECN++ and AccECN, test the correctness of implementation and provide examples.</p>
@@ -119,7 +119,7 @@
             <li>Clone the project's github repository</li>
             <li>Checkout to "accecn-with-options" branch (git checkout accecn-with-options)</li>
             <li>Build ns-3</li>
-            <li>Run ECN++ test suite: ./test.py --suite=tcp-accecn-test</li>
+            <li>Run AccECN test suite: ./test.py --suite=tcp-accecn-test</li>
           </ol>
 
       <h5><font color="vintage">Possible Extensions</font></h5>
