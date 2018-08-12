@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Framework for TCP Prague simulations in ns-3</title>
+  <title>Implementation of AccECN and ECN++ in ns-3</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -33,19 +33,21 @@
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br>
-      <h4 class="header center black-text">Framework for TCP Prague simulations in ns-3</h4>
+      <h4 class="header center black-text">Implementation of AccECN and ECN++ in ns-3</h4>
       <div class="row center">
-        <h6 class="header col s12 light"><font color="vintage">Student:</font> Shravya K. S<br><br> <font color="vintage">Mentor:</font> Mohit P. Tahiliani<br><br> <font color="vintage">Organization:</font> The ns-3 Network Simulator Project</h6>
+        <h6 class="header col s12 light"><font color="vintage">Student:</font> Wenying Dai<br><br> <font color="vintage">Mentor:</font> Mohit P. Tahiliani<br><br> <font color="vintage">Organization:</font> The ns-3 Network Simulator Project</h6>
       </div> 
       <h5><font color="vintage">Project Overview</font></h5>
-      <p style="text-align:justify">During GSoC 2017, I started developing a framework for simulating TCP Prague in the ns-3 network simulator.  "TCP Prague" is a term used to refer to current research work on extending TCP (the dominant transport protocol in the Internet) to provide lower latency service in a wide-area network, similar to what can be achieved in data centers, but with a congestion control and in-network queuing elements that are backward compatible with legacy implementations. TCP Prague is targeted to be an evolution of Data Center TCP (DCTCP), and the research community is parallely implementing and standardising it.</p>
+      <p style="text-align:justify">Reducing Internet Transport Latency is an interesting research topic and has gained significant attention in the recent past. Some of the promising new solutions rely on Explicit Congestion Notification (ECN) (RFC 3168) to notify TCP endpoints of congestion that may be developing in a bottleneck queue, without resorting to packet drops. As a result, there have been attempts at Internet Engineering Task Force (IETF) to extend the functionality of ECN and provide rich feedback to TCP endpoints. In this regard, Accurate ECN feedback (AccECN) and ECN++ are two active topics of discussion at IETF. During GSoC 2018, I extended the ECN implementation in ns-3 to support ECN++ and AccECN, test the correctness of implementation and provide examples.</p>
 
-      <p style="text-align:justify">DCTCP starves the throughput of other TCP flows (e.g., Reno, Cubic, etc) when they co-exist; so one of the goals of research community is to ensure that TCP Prague can co-exist with other TCP flows without degrading their throughput. Although still a work-in-progress, a few modules of TCP Prague have been finalised and briefly experimented by the research community, such as: the Low Latency, Low Loss, Scalable throughput (L4S) service architecture, DualQ Coupled Active Queue Management (AQM) and Modified ECN Semantics for Ultra Low Queuing Delay.</p>
+      <p style="text-align:justify">ECN++ is a sender-side change. The feedback behavior at the receiver depends on whether classic ECN feedback or experimental AccECN feedback has been negotiated. ECN++ allows the use of ECN on the following TCP control packets: SYNs, pure ACKs, Window probes, FINs, RSTs, and retransmissions. For each type of control packet or transmission, the detailed changes to the sender's behavior consist of the following two aspects: (a) whether it sets ECT (b) its response to congestion feedback.</p>
 
-      <p style="text-align:justify">I developed a framework to simulate above mentioned TCP Prague modules in ns-3 with necessary examples, tests and documentation. This work is important to the ns-3 and research community, because this is a contemporary research topic and because network simulators are extensively used for performance evaluation. This report presents the details of the work done during GSoC 2017, and provides the necessary information to reproduce this work.</p>
+      <p style="text-align:justify">AccECN provides more Accurate ECN feedback in the TCP header to provide more than one feedback signal per RTT. AccECN needs to cooperate with other standards which defined the usage of the information such as classic ECN (RFC 3168), ECN+ (RFC 5562) and ECN++. Therefore, how to use AccECN feedback information to optimize the TCP performance is out of scope for AccECN implementation. The AccECN has been designed into two parts: (a) an essential part that re-uses TCP header bits to feedback the number of arriving CE marked packets. (b) the supplementary part using a new AccECN TCP option that provides additional feedback on the number of bytes that arrive marked with each of the three ECN codepoints (not just CE marks).</p>
+
+      <p style="text-align:justify">I have implemened ECN++ and AccECN in ns-3 with necessary examples, tests and documentation. This work is important to the ns-3 and research community, because this is a contemporary research topic and because network simulators are extensively used for performance evaluation. This report presents the details of the work done during GSoC 2018, and provides the necessary information to reproduce this work.</p>
 
       <h5><font color="vintage">Deliverables</font></h5>
-      <p style="text-align:justify">This project was split into three phases, and each phase has been completed with documentation, tests, and example programs, and is ready to be reviewed for merging to the ns-3 mainline. My patches integrate with ns-3-dev as of changeset 13050, and contain 7848 lines of new or changed C++ code.</p>
+      <p style="text-align:justify">This project was split into two phases, and each phase has been completed with documentation, tests, and example programs, and is ready to be reviewed for merging to the ns-3 mainline. My patches integrate with ns-3-dev as of changeset 13735 and contain 7848 lines of new or changed C++ code.</p>
 
     </div>
   </div>
@@ -59,9 +61,9 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center light-green-text"><i class="material-icons">assignment_turned_in</i></h2>
-            <h5 class="center"><font color="vintage">Phase 1</font><br>Implementation of Data Center TCP in ns-3</h5>
+            <h5 class="center"><font color="vintage">Phase 1</font><br>Implementation of ECN++ ns-3</h5>
 
-            <p class="light" style="text-align:center">Implemented Data Center TCP (DCTCP) algorithm in ns-3 and documented its functionality. A test suite and an example program (aligned with the ACM SIGCOMM 2010 paper of DCTCP) are also provided.</p>
+            <p class="light" style="text-align:center">Implemented ECN++ functionality in ns-3 and documented its functionality. A test suite and an example program are also provided.</p>
 
             <div class="row center">
             <a href="https://codereview.appspot.com/322140043" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
@@ -72,9 +74,9 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center light-green-text"><i class="material-icons">assignment_turned_in</i></h2>
-            <h5 class="center"><font color="vintage">Phase 2</font><br>Topology Helpers for Data Center Networks in ns-3</h5>
+            <h5 class="center"><font color="vintage">Phase 2</font><br>Implementation of AccECN in ns-3</h5>
 
-            <p class="light" style="text-align:center">Implemented BCube and Fat Tree topology helpers for Data Center Network simulations in ns-3, and documented their functionality. An example program for each helper with NetAnim support is also provided.</p>
+            <p class="light" style="text-align:center">Implemented Accurate ECN functionality in ns-3, and documented its functionality. A test suite is also provided.</p>
 
             <div class="row center">
             <a href="https://codereview.appspot.com/326110043" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
@@ -82,7 +84,7 @@
           </div>
         </div>
 
-        <div class="col s12 m4">
+<!--        <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center light-green-text"><i class="material-icons">assignment_turned_in</i></h2>
             <h5 class="center"><font color="vintage">Phase 3</font><br>DualQ Coupled AQM support in ns-3</h5>
@@ -92,7 +94,7 @@
             <a href="https://codereview.appspot.com/328380044" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
 
     </div>
@@ -128,16 +130,15 @@
       <h5><font color="vintage">Possible Extensions</font></h5>
         <p style="text-align:justify">This project can be extended further as suggested below:</p>
           <ol>
-            <li>DCTCP model currently works with RED queue discipline only. It could be extended to work with the basic PfifoFast queue discipline. PfifoFast does not support ECN marking yet, which is mandatory for the working of DCTCP.</li>
-            <li>DualQ Coupled framework implemented in this project is specific to PiSquare queue discipline. It could be more generalised to support other queue disciplines like Curvy RED.</li>
-            <li>DualQ implementation can be further optimised using integer arithmetic as described in the Internet draft of DualQ Coupled AQM.</li>
+            <li>Our ECN++ implementation currently does not provide support to mark pure ACK packets. Enabling the marking of pure ACKs is tricky because the response to a CE-marked pure ACK packet is ambiguous and Internet draft does not provide guidelines to resolve this ambiguity. On communicating with the authors of ECN++, we found that the ECN++ Internet draft might be revised to avoid marking pure ACK packets. If the support for marking pure ACK packets is not removed from the Internet draft (instead, the ambiguity is resolved), our implementation would have to be extended to support marking of pure ACK packets.</li>
+            <li>Our implementation of AccECN assumes that there are no middleboxes in the network that may affect the AccECN functionality. This work can be extended by relaxing this assumption and ensuring AccECN continues to work despite the presence of middleboxes.</li>
           </ol>
 
       <h5><font color="vintage">Online References</font></h5>
         <p style="text-align:justify">More details about this project, source code and final patch are available on the links given below: </p>
         
         <div class="row center">
-        <a href="https://www.nsnam.org/wiki/GSOC2017Tcp" id="download-button" class="btn-large waves-effect waves-light maroon">Project Wiki</a>
+        <a href="https://www.nsnam.org/wiki/GSOC2018AccECN_ECN%2B%2B" id="download-button" class="btn-large waves-effect waves-light maroon">Project Wiki</a>
         <a href="https://github.com/shravya-ks/ns-3-tcp-prague" id="download-button" class="btn-large waves-effect waves-light maroon">Source Code</a>
         <a href="https://codereview.appspot.com/328380044" id="download-button" class="btn-large waves-effect waves-light maroon">Final Patch</a>
 
@@ -150,21 +151,21 @@
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Acknowledgement</h5>
-          <p class="grey-text text-lighten-4">This project was funded by Google Summer of Code (GSoC) 2017. I would like to thank the ns-3 community for giving me this opportunity, and providing the much needed assistance in completing this project.</p>
+          <p class="grey-text text-lighten-4">This project was funded by Google Summer of Code (GSoC) 2018. I would like to thank the ns-3 community for giving me this opportunity, and providing the much needed assistance in completing this project.</p>
 
 
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">People</h5>
           <ul>
-            <li><a class="white-text" href="https://github.com/shravya-ks">Shravya K. S. (Student)</a></li>
+            <li><a class="white-text" href="https://github.com/dwy927">Wenying Dai (Student)</a></li>
             <li><a class="white-text" href="ttps://github.com/mohittahiliani">Mohit P. Tahiliani (Mentor)</a></li>
           </ul>
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">Useful Links</h5>
           <ul>
-            <li><a class="white-text" href="https://www.nsnam.org/wiki/GSOC2017Tcp">Project Wiki</a></li>
+            <li><a class="white-text" href="https://www.nsnam.org/wiki/GSOC2018AccECN_ECN%2B%2B">Project Wiki</a></li>
             <li><a class="white-text" href="https://github.com/shravya-ks/ns-3-tcp-prague">Source repository</a></li>
             <li><a class="white-text" href="https://github.com/shravya-ks/ns-3-tcp-prague/issues">Open Issues</a></li>
           </ul>
