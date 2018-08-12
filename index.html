@@ -66,7 +66,7 @@
             <p class="light" style="text-align:center">Implemented ECN++ functionality with classic ECN feedback in ns-3 and documented its functionality. A test suite and an example is provided.</p>
 
             <div class="row center">
-            <a href="#" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
+            <a href="#" id="download-button" class="btn-large waves-effect waves-light maroon">Source Code</a>
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
             <p class="light" style="text-align:center">Implemented the Accurate ECN functionality in ns-3 without TCP Options and documented its functionality. A test suite is provided.</p>
 
             <div class="row center">
-            <a href="#" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
+            <a href="#" id="download-button" class="btn-large waves-effect waves-light maroon">Source Code</a>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
 
             <p class="light" style="text-align:center">Implemented the Accurate ECN functionality in ns-3 with TCP Options and documented its functionality. A test suite is provided.</p>
             <div class="row center">
-            <a href="#" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
+            <a href="#" id="download-button" class="btn-large waves-effect waves-light maroon">Source Code</a>
             </div>
           </div>
         </div>
@@ -102,29 +102,24 @@
     <div class="section">
       <h6><font color="brown">Steps to build the code for Phase 1</font></h6>
           <ol>
-            <li>Download ns-3-dev, checkout version 13050</li>
-            <li>Download the 'raw' patch from the above link and save it (e.g., dctcp-raw.patch)</li>
-            <li>Run the following patch command: patch -p1 -i dctcp-raw.patch</li>
-            <li>Compile and run the example program: ./waf --run "dctcp-example"</li>
-            <li>To run the test suite: ./test.py --suite=tcp-dctcp-test</li>
+            <li>Clone the project's github repository</li>
+            <li>Checkout to "ecnpp" branch (git checkout ecnpp)</li>
+            <li>Build ns-3</li>
+            <li>Run ECN++ test suite: ./test.py --suite=tcp-ecnpp-test</li>
           </ol>
       <h6><font color="brown">Steps to build the code for Phase 2</font></h6>
           <ol>
-            <li>Download ns-3-dev, checkout version 13050</li>
-            <li>Download the 'raw' patch from the above link and save it (e.g., topology-helper.patch)</li>
-            <li>Run the following patch command: patch -p1 -i topology-helper.patch</li>
-            <li>Compile and run the BCube example program: ./waf --run "bcube-animation"</li>
-            <li>Compile and run the Fat-Tree example program: ./waf --run "fat-tree-animation"</li>
+            <li>Clone the project's github repository</li>
+            <li>Checkout to "accecn-without-options" branch (git checkout accecn-without-options)</li>
+            <li>Build ns-3</li>
+            <li>Run AccECN test suite: ./test.py --suite=tcp-accecn-test</li>
           </ol>
       <h6><font color="brown">Steps to build the code for Phase 3</font></h6>
           <ol>
-            <li>Download ns-3-dev, checkout version 13050</li>
-            <li>Download the 'raw' patch from the above link and save it (e.g., aqm.patch)</li>
-            <li>Run the following patch command: patch -p1 -i aqm.patch</li>
-            <li>Compile and run the PiSquare example program ./waf --run "pi-square-example"</li>
-            <li>Compile and run the PiSquareQueueDisc test-suite: ./test.py --suite=pi-square-queue-disc</li>
-            <li>Compile and run the DualQCoupledPiSquare example program: ./waf --run "dual-q-coupled-pi-square-example"</li>
-            <li>Compile and run the  DualQCoupledPiSquare test-suite: ./test.py --suite=dual-q-coupled-pi-square-queue-disc</li>
+            <li>Clone the project's github repository</li>
+            <li>Checkout to "accecn-with-options" branch (git checkout accecn-with-options)</li>
+            <li>Build ns-3</li>
+            <li>Run ECN++ test suite: ./test.py --suite=tcp-accecn-test</li>
           </ol>
 
       <h5><font color="vintage">Possible Extensions</font></h5>
